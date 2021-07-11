@@ -1,6 +1,38 @@
 <?php 
 require "db.php";
 ?>
+<?php
+$data = $_POST;
+
+if(isset($data['send']))
+{
+	//отправляем форму тут 
+	$errors = array();
+	if($data['fio'] == '')
+	{
+		$errors[] = 'Введите ФИО';
+	}
+	if($data['phone_number'] == '')
+	{
+		$errors[] = 'Введите телефон';
+	}
+	if($data['email'] !=='')
+	{
+		$pos = strpos($data['email'], "@gmail.com");
+		if ($pos !== false) {
+	     	$errors[] ="Регистрация пользователей с таким почтовым адресом невозможна";
+		} 	
+	}
+
+	if( empty($errors))
+		{
+			//отправляем форму
+		} else 
+		{
+			echo '<div style="color: red;">'.array_shift($errors). '</div><hr>';
+		}
+}
+?>
 <form action ="/feedback.php" method ="POST">
 	<p>
 		<p><string>Добавьте комментарий: </string></p>
