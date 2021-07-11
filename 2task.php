@@ -1,12 +1,10 @@
-<?php 
-require "db.php";
-?>
+
 <?php
 $data = $_POST;
 
 if(isset($data['send']))
 {
-	//отправляем форму тут 
+	//выполнение условия, если поле ФИО и поле номер телефона будут пустыми - выдать ошибку. 
 	$errors = array();
 	if($data['fio'] == '')
 	{
@@ -18,6 +16,7 @@ if(isset($data['send']))
 	}
 	if($data['email'] !=='')
 	{
+		// Условие для почты, если при вводе домена будет использован домен @gmail.com - выдать ошибку.
 		$pos = strpos($data['email'], "@gmail.com");
 		if ($pos !== false) {
 	     	$errors[] ="Регистрация пользователей с таким почтовым адресом невозможна";
@@ -26,7 +25,7 @@ if(isset($data['send']))
 
 	if( empty($errors))
 		{
-			//отправляем форму
+			
 		} else 
 		{
 			echo '<div style="color: red;">'.array_shift($errors). '</div><hr>';
@@ -52,6 +51,7 @@ if(isset($data['send']))
 	</p>
 	<p>
 		<p><string>Введите Ваш номер телефона: </string></p>
+<!--ограничение в виде паттерна, которое обязывает человека писать в поле для номера телефона только цифры. -->
 		<input type ="text"  name ="phone_number"  pattern="[+]{0,1}[1-9]{1}[0-9]{10}" title ="Использовать можно только цифры" value ="<?php echo @$data['phone_number'];?>"></input>
 	</p>
 	<p>
